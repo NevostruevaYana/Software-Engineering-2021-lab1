@@ -12,9 +12,13 @@ class USDEURConverter:
     def check_currency(currency1, currency2):
         full_page = requests.get(USD_EUR, headers=headers)
         soup = BeautifulSoup(full_page.content, 'html.parser')
-        values = soup.findAll("td", {"class": "I3afp"})
-        curr = soup.findAll("td", {"class": "I3dj"})
-        units = soup.findAll("td", {"class": "I3afn"})
+
+        classes = soup.findAll("td")
+
+        values = soup.findAll("td", {"class": str(classes[7]).split("\"")[1]})
+        curr = soup.findAll("td", {"class": str(classes[4]).split("\"")[1]})
+        units = soup.findAll("td", {"class": str(classes[6]).split("\"")[1]})
+
         num_of_cur = len(curr)
         currencies = {}
         for i in range(num_of_cur - 1):
