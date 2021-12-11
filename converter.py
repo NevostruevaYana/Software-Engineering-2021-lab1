@@ -24,12 +24,17 @@ class USDEURConverter:
         for i in range(num_of_cur - 1):
             currencies[curr[i + 1].text] = i
 
-        form_curr = currencies[currency1]
-        to_curr = currencies[currency2]
-
-        form_curr_ = float(values[form_curr].text) / int(units[form_curr].text)
-        to_curr_ = float(values[to_curr].text) / int(units[to_curr].text)
-        s = str(form_curr_ / to_curr_)
+        s = "ok"
+        try:
+            form_curr = currencies[currency1]
+            to_curr = currencies[currency2]
+        except KeyError:
+            print("Invalid currency")
+            s = "Invalid currency"
+        if s == "ok":
+            form_curr_ = float(values[form_curr].text) / int(units[form_curr].text)
+            to_curr_ = float(values[to_curr].text) / int(units[to_curr].text)
+            s = str(form_curr_ / to_curr_)
         return s
 
     @staticmethod
