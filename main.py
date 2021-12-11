@@ -15,8 +15,8 @@ if __name__ == "__main__":
     to_currency = args.to
     value = float(args.value)
 
-    currency = USDEURConverter.check_currency().replace(",", ".")
+    currency = USDEURConverter.check_currency(from_currency.lower(), to_currency.lower()).replace(",", ".")
     float_currency = float(currency)
-    answer = USDEURConverter.calculate_value(float_currency, float(args.value))
-    print("Current USD -> EUR exchange rate: " + currency)
-    print(args.value + " USD = " + str(answer) + " EUR")
+    answer = USDEURConverter.calculate_value(float_currency, value)
+    print("Current " + from_currency + " -> " + to_currency + " exchange rate: " + currency)
+    print(args.value + " " + from_currency.upper() + " = " + str(answer) + " " + to_currency.upper())

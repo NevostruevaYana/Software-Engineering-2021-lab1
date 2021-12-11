@@ -1,10 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 
-USD_EUR = 'https://www.google.com/search?q=%D0%B4%D0%BE%D0%BB%D0%BB%D0%B0%D1%80+%D0%BA+' \
-          '%D0%B5%D0%B2%D1%80%D0%BE&oq=%D0%B4%D0%BE%D0%BB%D0%BB%D0%B0%D1%80+%D0%BA+%D0%B5%' \
-          'D0%B2%D1%80%D0%BE&aqs=chrome..69i57j0i20i263i512j0i512l7j0i20i263i512.2923j1j15&' \
-          'sourceid=chrome&ie=UTF-8'
+USD_EUR = 'https://www.fontanka.ru/currency.html'
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
                          '(KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36'}
 
@@ -12,11 +9,24 @@ headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 class USDEURConverter:
 
     @staticmethod
-    def check_currency():
+    def check_currency(currency1, currency2):
         full_page = requests.get(USD_EUR, headers=headers)
         soup = BeautifulSoup(full_page.content, 'html.parser')
-        convert = soup.findAll("span", {"class": "DFlfde SwHCTb"})
-        return convert[0].text
+        values = soup.findAll("td", {"class": "I3afp"})
+        curr = soup.findAll("td", {"class": "I3dj"})
+        units = soup.findAll("td", {"class": "I3afn"})
+        num_of_cur = len(curr)
+        currencies = {}
+        for i in range(num_of_cur - 1):
+            currencies[curr[i + 1].text] = i
+
+        form_curr = currencies[currency1]
+        to_curr = currencies[currency2]
+
+        form_curr_ = float(values[form_curr].text) / int(units[form_curr].text)
+        to_curr_ = float(values[to_curr].text) / int(units[to_curr].text)
+        s = str(form_curr_ / to_curr_)
+        return s
 
     @staticmethod
     def calculate_value(currency, value):
