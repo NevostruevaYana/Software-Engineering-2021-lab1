@@ -10,26 +10,35 @@ class USDEURConverter:
 
     @staticmethod
     def check_currency(currency1, currency2):
-        full_page = requests.get(USD_EUR, headers=headers)
-        soup = BeautifulSoup(full_page.content, 'html.parser')
+        try:
+            full_page = requests.get(USD_EUR, headers=headers)
+            soup = BeautifulSoup(full_page.content, 'html.parser')
 
-        classes = soup.findAll("td")
+            classes = soup.findAll("td")
 
-        values = soup.findAll("td", {"class": str(classes[7]).split("\"")[1]})
-        curr = soup.findAll("td", {"class": str(classes[4]).split("\"")[1]})
-        units = soup.findAll("td", {"class": str(classes[6]).split("\"")[1]})
+            values = soup.findAll("td", {"class": str(classes[7]).split("\"")[1]})
+            curr = soup.findAll("td", {"class": str(classes[4]).split("\"")[1]})
+            units = soup.findAll("td", {"class": str(classes[6]).split("\"")[1]})
+        except (requests.exceptions.Timeout, requests.exceptions.TooManyRedirects, requests.exceptions.RequestException,
+                requests.exceptions.ConnectionError, requests.exceptions.HTTPError,):
+            print("Oops! We have a problem with request!")
 
         num_of_cur = len(curr)
         currencies = {}
         for i in range(num_of_cur - 1):
             currencies[curr[i + 1].text] = i
 
-        form_curr = currencies[currency1]
-        to_curr = currencies[currency2]
-
-        form_curr_ = float(values[form_curr].text) / int(units[form_curr].text)
-        to_curr_ = float(values[to_curr].text) / int(units[to_curr].text)
-        s = str(form_curr_ / to_curr_)
+        s = "ok"
+        try:
+            form_curr = currencies[currency1]
+            to_curr = currencies[currency2]
+        except KeyError:
+            print("Invalid currency")
+            s = "Invalid currency"
+        if s == "ok":
+            form_curr_ = float(values[form_curr].text) / int(units[form_curr].text)
+            to_curr_ = float(values[to_curr].text) / int(units[to_curr].text)
+            s = str(form_curr_ / to_curr_)
         return s
 
     @staticmethod
