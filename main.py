@@ -23,16 +23,21 @@ class CurrencyConv(QtWidgets.QMainWindow):
 
     def converter(self):
         input_currency = self.ui.input_currency.text()
-        input_amount = int(self.ui.input_amount.text())
+        try:
+            input_amount = float(self.ui.input_amount.text())
+        except ValueError:
+            self.ui.output_amount.setText("Invalid amount")
+            input_amount = -1
         output_currency = self.ui.output_currency.text()
 
         currency = USDEURConverter.check_currency(input_currency.lower(), output_currency.lower())
         if currency == "Invalid currency":
             self.ui.output_amount.setText(currency)
         else:
-            float_currency = float(currency)
-            answer = USDEURConverter.calculate_value(float_currency, float(input_amount))
-            self.ui.output_amount.setText(str(answer))
+            if input_amount != -1:
+                float_currency = float(currency)
+                answer = USDEURConverter.calculate_value(float_currency, float(input_amount))
+                self.ui.output_amount.setText(str(answer))
 
 
 if __name__ == "__main__":
