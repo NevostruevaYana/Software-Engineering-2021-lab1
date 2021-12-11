@@ -34,10 +34,8 @@ class CurrencyConv(QtWidgets.QMainWindow):
 
 
 if __name__ == "__main__":
-
     ui = QtWidgets.QApplication([])
     app = CurrencyConv()
     app.show()
 
     sys.exit(ui.exec_())
-
