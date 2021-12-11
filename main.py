@@ -1,22 +1,43 @@
-import argparse
+import sys
+from PyQt5 import QtWidgets
+from PyQt5.QtGui import QIcon
+from ui import Ui_MainWindow
 from converter import USDEURConverter
 
+
+class CurrencyConv(QtWidgets.QMainWindow):
+    def __init__(self):
+        super(CurrencyConv, self).__init__()
+        self.ui = Ui_MainWindow()
+        self.ui.setupUi(self)
+        self.init_UI()
+
+    def init_UI(self):
+        self.setWindowTitle("Конвертер Валют")
+        self.setWindowIcon(QIcon("my.png"))
+        self.ui.input_currency.setPlaceholderText("from")
+        self.ui.input_amount.setPlaceholderText("amount")
+        self.ui.output_currency.setPlaceholderText("to")
+        self.ui.output_amount.setPlaceholderText("answer")
+        self.ui.pushButton.clicked.connect(self.converter)
+
+    def converter(self):
+        input_currency = self.ui.input_currency.text()
+        input_amount = int(self.ui.input_amount.text())
+        output_currency = self.ui.output_currency.text()
+
+        currency = USDEURConverter.check_currency(input_currency.lower(), output_currency.lower())
+        self.ui.output_amount.setText(currency)
+        float_currency = float(currency)
+        answer = USDEURConverter.calculate_value(float_currency, float(input_amount))
+        self.ui.output_amount.setText(str(answer))
+
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser("python main.py", description="USD EUR Converter")
-    parser.add_argument("-v", "--value", help="the value to be converted",
-                        type=str, default="1")
-    parser.add_argument("-f", "--ffrom", help="from currency",
-                        type=str, default="USD")
-    parser.add_argument("-t", "--to", help="to currency",
-                        type=str, default="EUR")
-    args = parser.parse_args()
 
-    from_currency = args.ffrom
-    to_currency = args.to
-    value = float(args.value)
+    ui = QtWidgets.QApplication([])
+    app = CurrencyConv()
+    app.show()
 
-    currency = USDEURConverter.check_currency(from_currency.lower(), to_currency.lower()).replace(",", ".")
-    float_currency = float(currency)
-    answer = USDEURConverter.calculate_value(float_currency, value)
-    print("Current " + from_currency + " -> " + to_currency + " exchange rate: " + currency)
-    print(args.value + " " + from_currency.upper() + " = " + str(answer) + " " + to_currency.upper())
+    sys.exit(ui.exec_())
+
