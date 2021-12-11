@@ -10,14 +10,18 @@ class USDEURConverter:
 
     @staticmethod
     def check_currency(currency1, currency2):
-        full_page = requests.get(USD_EUR, headers=headers)
-        soup = BeautifulSoup(full_page.content, 'html.parser')
+        try:
+            full_page = requests.get(USD_EUR, headers=headers)
+            soup = BeautifulSoup(full_page.content, 'html.parser')
 
-        classes = soup.findAll("td")
+            classes = soup.findAll("td")
 
-        values = soup.findAll("td", {"class": str(classes[7]).split("\"")[1]})
-        curr = soup.findAll("td", {"class": str(classes[4]).split("\"")[1]})
-        units = soup.findAll("td", {"class": str(classes[6]).split("\"")[1]})
+            values = soup.findAll("td", {"class": str(classes[7]).split("\"")[1]})
+            curr = soup.findAll("td", {"class": str(classes[4]).split("\"")[1]})
+            units = soup.findAll("td", {"class": str(classes[6]).split("\"")[1]})
+        except (requests.exceptions.Timeout, requests.exceptions.TooManyRedirects, requests.exceptions.RequestException,
+                requests.exceptions.ConnectionError, requests.exceptions.HTTPError,):
+            print("Oops! We have a problem with request!")
 
         num_of_cur = len(curr)
         currencies = {}
