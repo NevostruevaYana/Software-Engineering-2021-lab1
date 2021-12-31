@@ -43,6 +43,7 @@ class Ui_MainWindow(object):
         self.output_amount.setObjectName("output_amount")
         self.pushButton = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton.setGeometry(QtCore.QRect(50, 470, 380, 60))
+        self.pushButton.setObjectName("button")
         font = QtGui.QFont()
         font.setFamily("Montserrat")
         font.setPointSize(14)
