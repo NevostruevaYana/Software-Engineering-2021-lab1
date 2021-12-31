@@ -65,7 +65,3 @@ class TestConverter(unittest.TestCase):
         self.assertEqual(USDEURConverter.check_currency("USD", "EU"), "Invalid currency")
         self.assertEqual(USDEURConverter.check_currency("try", "aud"), "0.1")
         self.assertEqual(USDEURConverter.check_currency("usd", "eur"), "0.9")
-
-
-if __name__ == '__main__':
-    unittest.main()
