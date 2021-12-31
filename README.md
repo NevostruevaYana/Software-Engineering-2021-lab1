@@ -12,3 +12,7 @@
 ### Example of usage
 
 <img src="images/app_gui.png" width="250">     <img src="images/app_example.png" width="250">
+
+# Build Status
+
+![Build status](https://https://github.com/NevostruevaYana/Software-Engineering-2021-lab1/actions/workflows/testing.yml)
