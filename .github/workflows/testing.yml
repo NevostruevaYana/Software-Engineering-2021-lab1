@@ -20,7 +20,7 @@ jobs:
     - name: Install deps
       run: |
         python -m pip install --upgrade pip
-        pip install pytest
+        pip install pytest, requests, bs4, pyqt5
     - name: Testing
       run: |
         pytest test_converter.py
