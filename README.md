@@ -15,4 +15,4 @@
 
 # Build Status
 
-![Build status](https://https://github.com/NevostruevaYana/Software-Engineering-2021-lab1/actions/workflows/testing.yml)
+![Build status](https://github.com/NevostruevaYana/Software-Engineering-2021-lab1/actions/workflows/testing.yml)
