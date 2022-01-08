@@ -38,7 +38,7 @@ class USDEURConverter:
         if s == "ok":
             form_curr_ = float(values[form_curr].text) / int(units[form_curr].text)
             to_curr_ = float(values[to_curr].text) / int(units[to_curr].text)
-            s = str(form_curr_ / to_curr_)
+            s = str(round(form_curr_ / to_curr_, 1))
         return s
 
     @staticmethod
