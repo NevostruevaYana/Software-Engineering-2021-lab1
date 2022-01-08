@@ -15,4 +15,10 @@
 
 # Build Status
 
+Badge for branch main
+
 ![Build status](https://github.com/NevostruevaYana/Software-Engineering-2021-lab1/actions/workflows/testing.yml/badge.svg?branch=main)
+
+Badge for branch develop
+
+![Build status](https://github.com/NevostruevaYana/Software-Engineering-2021-lab1/actions/workflows/testing.yml/badge.svg?branch=develop)
